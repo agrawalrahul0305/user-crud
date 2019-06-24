@@ -1,5 +1,6 @@
 package com.assessment.controller;
 
+import static com.assessment.model.Constants.API_PREFIX;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,25 +32,25 @@ public class UserController {
 	@Autowired
 	UserService userService;
 
-    @GetMapping(value = "/users/{id}")
+    @GetMapping(API_PREFIX + "/users/{id}")
     public User getUser(@PathVariable(value = "id") long id){
         return userService.findById(id);
     }
 
 
-    @PostMapping(value="/signup")
+    @PostMapping(API_PREFIX + "/signup")
     public User createUser(@Valid @RequestBody UserDto userDto){
         return userService.createUser(userDto);
     }
     
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping(value="/user/{id}")
+    @PutMapping(API_PREFIX + "/user/{id}")
     public User updateUser(@PathVariable(value = "id") long id, @Valid @RequestBody UserDto userDto){
         return userService.updateUser(userDto, id);
     }
     
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping(value="/user/{id}")
+    @DeleteMapping(API_PREFIX + "/user/{id}")
     public void deleteUser(@PathVariable(value = "id") long id){
         userService.deleteUser(id);
     }
